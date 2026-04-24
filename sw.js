@@ -1,32 +1,26 @@
 /**
  * sw.js — Service Worker (PWA)
- * ──────────────────────────────────────────────────────────────
- * يوفر:
- * - Cache للأصول الثابتة (HTML, CSS, JS)
- * - Network-first للطلبات الديناميكية (Supabase)
- * - رسالة عند عدم الاتصال
- * ──────────────────────────────────────────────────────────────
  */
 
 const CACHE_NAME    = 'inventory-erp-v3'
+const BASE          = '/inventory-app'
 const STATIC_ASSETS = [
-  '/inventory-app/',
-  '/inventory-app//index.html',
-  '/inventory-app//assets/css/main.css',
-  '/inventory-app//src/main.js',
-  '/inventory-app//src/config/supabase.js',
-  '/inventory-app//src/store/store.js',
-  '/inventory-app//src/router/router.js',
-  '/inventory-app//src/utils/security.js',
-  '/inventory-app//src/utils/formatters.js',
-  '/inventory-app//src/utils/validators.js',
-  '/inventory-app//src/components/toast.js',
-  '/inventory-app//src/components/modal.js',
-  '/inventory-app//src/components/spinner.js',
-  '/inventory-app//src/components/confirmDialog.js',
+  `${BASE}/`,
+  `${BASE}/index.html`,
+  `${BASE}/assets/css/main.css`,
+  `${BASE}/src/main.js`,
+  `${BASE}/src/config/supabase.js`,
+  `${BASE}/src/store/store.js`,
+  `${BASE}/src/router/router.js`,
+  `${BASE}/src/utils/security.js`,
+  `${BASE}/src/utils/formatters.js`,
+  `${BASE}/src/utils/validators.js`,
+  `${BASE}/src/components/toast.js`,
+  `${BASE}/src/components/modal.js`,
+  `${BASE}/src/components/spinner.js`,
+  `${BASE}/src/components/confirmDialog.js`,
 ]
 
-// ── Install: تخزين الأصول الثابتة ──────────────────────────
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
@@ -38,7 +32,6 @@ self.addEventListener('install', (event) => {
   self.skipWaiting()
 })
 
-// ── Activate: حذف الـ Cache القديم ─────────────────────────
 self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches.keys().then((keys) =>
@@ -52,16 +45,14 @@ self.addEventListener('activate', (event) => {
   self.clients.claim()
 })
 
-// ── Fetch: استراتيجية التخزين ───────────────────────────────
 self.addEventListener('fetch', (event) => {
   const url = new URL(event.request.url)
 
-  // طلبات Supabase — Network First (أحدث بيانات دائماً)
+  // طلبات Supabase — Network First
   if (url.hostname.includes('supabase.co')) {
     event.respondWith(
       fetch(event.request)
         .then((response) => {
-          // Cache الاستجابات الناجحة فقط
           if (response.ok) {
             const clone = response.clone()
             caches.open(CACHE_NAME).then((cache) => cache.put(event.request, clone))
@@ -73,7 +64,7 @@ self.addEventListener('fetch', (event) => {
     return
   }
 
-  // طلبات Google Fonts — Cache First
+  // Google Fonts — Cache First
   if (url.hostname.includes('fonts.g')) {
     event.respondWith(
       caches.match(event.request).then((cached) =>
@@ -99,9 +90,8 @@ self.addEventListener('fetch', (event) => {
           }
           return response
         }).catch(() => {
-          // إذا كان الطلب لـ HTML وغير متصل، أعد الصفحة الرئيسية
           if (event.request.headers.get('accept')?.includes('text/html')) {
-            return caches.match('/index.html')
+            return caches.match(`${BASE}/index.html`)
           }
         })
       })
