@@ -4,29 +4,21 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
-  <!-- ══════════════════════════════════════════
-       PWA & Security Meta Tags
-  ══════════════════════════════════════════ -->
   <meta name="theme-color" content="#0f172a" />
+  <meta name="mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="المخزون" />
 
   <!--
-    🔐 SECURITY: Content Security Policy
-    - default-src 'self'         → لا موارد خارجية افتراضياً
-    - script-src                 → نسمح فقط بـ CDN محدد (Supabase) + الكود المحلي
-    - style-src                  → نسمح بـ Google Fonts و Tailwind CDN فقط
-    - connect-src                → نسمح فقط بـ Supabase APIs
-    - img-src                    → نسمح بـ data: URIs و blob: للصور المحلية
-    - object-src 'none'          → منع Flash/Plugins تماماً
-    - base-uri 'self'            → منع هجمات base tag injection
-    ملاحظة: في الإنتاج، استبدل *.supabase.co بعنوان مشروعك المحدد
+    🔐 Content Security Policy — مُصلحة للعمل على GitHub Pages (static)
+    - لا يوجد server لتوليد nonce → نستخدم unsafe-inline للـ scripts الداخلية
+    - Tailwind CDN مضافة صراحةً
   -->
   <meta http-equiv="Content-Security-Policy"
     content="
       default-src 'self';
-      script-src  'self' https://cdn.jsdelivr.net https://unpkg.com 'nonce-WILL_BE_REPLACED_SERVER_SIDE';
+      script-src  'self' https://cdn.tailwindcss.com https://cdn.jsdelivr.net https://unpkg.com 'unsafe-inline';
       style-src   'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net;
       font-src    'self' https://fonts.gstatic.com;
       connect-src 'self' https://*.supabase.co wss://*.supabase.co;
@@ -37,21 +29,12 @@
     "
   />
 
-  <!-- منع ظهور الموقع داخل iFrame (حماية من Clickjacking) -->
-  <meta http-equiv="X-Frame-Options" content="DENY" />
-  <!-- منع MIME Sniffing -->
-  <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+  <!-- PWA Manifest & Icons — مسارات نسبية ✅ -->
+  <link rel="manifest" href="./manifest.json" />
+  <link rel="icon" type="image/svg+xml" href="./assets/icons/icon.svg" />
+  <link rel="apple-touch-icon" href="./assets/icons/icon.svg" />
 
-  <!-- ══════════════════════════════════════════
-       PWA Manifest & Icons
-  ══════════════════════════════════════════ -->
-  <link rel="manifest" href="/manifest.json" />
-  <link rel="icon" type="image/svg+xml" href="/assets/icons/icon.svg" />
-  <link rel="apple-touch-icon" href="/assets/icons/icon-192.png" />
-
-  <!-- ══════════════════════════════════════════
-       Fonts — خط Tajawal للعربية + IBM Plex Mono للأرقام
-  ══════════════════════════════════════════ -->
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
@@ -59,14 +42,10 @@
     rel="stylesheet"
   />
 
-  <!-- ══════════════════════════════════════════
-       Tailwind CSS via CDN (للتطوير)
-       في الإنتاج: استبدل بملف CSS مبني
-  ══════════════════════════════════════════ -->
+  <!-- Tailwind CSS via CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
-    // تخصيص Tailwind ليتوافق مع تصميمنا
-    tailwind.config = {
+    if (typeof tailwind !== 'undefined') { tailwind.config = {
       theme: {
         extend: {
           fontFamily: {
@@ -74,7 +53,6 @@
             mono:   ['IBM Plex Mono', 'monospace'],
           },
           colors: {
-            // نظام الألوان المخصص
             brand: {
               50:  '#eff6ff',
               100: '#dbeafe',
@@ -92,10 +70,10 @@
             },
           },
           animation: {
-            'fade-in':    'fadeIn 0.2s ease-out',
-            'slide-up':   'slideUp 0.25s ease-out',
-            'slide-in':   'slideIn 0.3s ease-out',
-            'spin-slow':  'spin 1.5s linear infinite',
+            'fade-in':   'fadeIn 0.2s ease-out',
+            'slide-up':  'slideUp 0.25s ease-out',
+            'slide-in':  'slideIn 0.3s ease-out',
+            'spin-slow': 'spin 1.5s linear infinite',
           },
           keyframes: {
             fadeIn:  { from: { opacity: '0', transform: 'translateY(4px)' }, to: { opacity: '1', transform: 'translateY(0)' } },
@@ -104,29 +82,17 @@
           },
         },
       },
-    }
+    } }
   </script>
 
-  <!-- ══════════════════════════════════════════
-       Supabase JS Client via CDN
-       🔐 نستخدم ESM build لدعم import/export
-  ══════════════════════════════════════════ -->
-  <!-- سيتم import من داخل الـ modules مباشرة -->
-
-  <!-- ══════════════════════════════════════════
-       ملف CSS المخصص
-  ══════════════════════════════════════════ -->
-  <link rel="stylesheet" href="/assets/css/main.css" />
+  <!-- ملف CSS المخصص — مسار نسبي ✅ -->
+  <link rel="stylesheet" href="./assets/css/main.css" />
 
   <title>نظام إدارة المخزون والمحاسبة</title>
 </head>
 
 <body class="bg-slate-900 font-arabic text-slate-100 antialiased">
 
-  <!-- ══════════════════════════════════════════
-       🔒 No-Script Warning
-       يظهر فقط إذا كان JavaScript معطلاً
-  ══════════════════════════════════════════ -->
   <noscript>
     <div style="
       position:fixed; inset:0; background:#0f172a; z-index:9999;
@@ -137,18 +103,14 @@
         <p style="color:#f87171; font-size:1.2rem; font-weight:700; margin-bottom:0.5rem;">⚠️ JavaScript مطلوب</p>
         <p style="color:#94a3b8; font-size:0.9rem; line-height:1.6;">
           هذا التطبيق يتطلب تفعيل JavaScript في المتصفح للعمل بشكل صحيح.
-          يرجى تفعيله والمحاولة مرة أخرى.
         </p>
       </div>
     </div>
   </noscript>
 
-  <!-- ══════════════════════════════════════════
-       Loading Screen — يظهر أثناء تحميل الـ modules
-  ══════════════════════════════════════════ -->
+  <!-- Loading Screen -->
   <div id="app-loader" class="fixed inset-0 bg-slate-900 z-50 flex items-center justify-center">
     <div class="text-center">
-      <!-- أيقونة متحركة -->
       <div class="relative w-16 h-16 mx-auto mb-4">
         <div class="absolute inset-0 border-4 border-slate-700 rounded-full"></div>
         <div class="absolute inset-0 border-4 border-t-blue-500 rounded-full animate-spin"></div>
@@ -164,15 +126,8 @@
     </div>
   </div>
 
-  <!-- ══════════════════════════════════════════
-       🏗️ هيكل التطبيق الرئيسي (SPA Shell)
-
-       هذا الهيكل ثابت — فقط #page-content يتغير
-       عند التنقل بين الصفحات
-  ══════════════════════════════════════════ -->
+  <!-- هيكل التطبيق الرئيسي -->
   <div id="app" class="hidden min-h-screen">
-
-    <!-- ── الـ Sidebar ──────────────────────────────── -->
     <aside id="sidebar" class="
       fixed top-0 right-0 h-full w-64 z-30
       bg-slate-800/95 backdrop-blur-xl
@@ -181,37 +136,25 @@
       shadow-2xl shadow-black/40
       transition-transform duration-300 ease-in-out
       translate-x-full lg:translate-x-0
-    ">
-      <!-- يُملأ بواسطة sidebar.js -->
-    </aside>
+    "></aside>
 
-    <!-- ── Overlay للموبايل ──────────────────────────── -->
     <div id="sidebar-overlay" class="
       fixed inset-0 bg-black/60 z-20
       backdrop-blur-sm hidden lg:hidden
     "></div>
 
-    <!-- ── المحتوى الرئيسي ──────────────────────────── -->
     <div class="flex flex-col min-h-screen lg:mr-64 transition-all duration-300">
-
-      <!-- الهيدر العلوي -->
       <header id="main-header" class="
         sticky top-0 z-10
         bg-slate-800/80 backdrop-blur-xl
         border-b border-slate-700/50
         px-4 py-3 flex items-center gap-3
-      ">
-        <!-- يُملأ بواسطة header.js -->
-      </header>
+      "></header>
 
-      <!-- منطقة الصفحة الديناميكية -->
       <main id="page-content" class="flex-1 overflow-auto p-4 md:p-6">
-        <div class="max-w-7xl mx-auto">
-          <!-- هنا يتم حقن محتوى كل صفحة -->
-        </div>
+        <div class="max-w-7xl mx-auto"></div>
       </main>
 
-      <!-- Footer -->
       <footer class="border-t border-slate-800 py-3 px-6 text-center">
         <p class="text-slate-600 text-xs">
           نظام إدارة المخزون والمحاسبة
@@ -221,36 +164,18 @@
     </div>
   </div>
 
-  <!-- ══════════════════════════════════════════
-       🔔 Toast Notifications Container
-       يُضاف إليه الإشعارات بواسطة toast.js
-  ══════════════════════════════════════════ -->
   <div id="toast-container" class="
     fixed bottom-4 left-1/2 -translate-x-1/2
     z-[100] flex flex-col gap-2
     w-full max-w-sm px-4
     pointer-events-none
-  " aria-live="polite" aria-atomic="true">
-  </div>
+  " aria-live="polite" aria-atomic="true"></div>
 
-  <!-- ══════════════════════════════════════════
-       🪟 Modal Container
-       النوافذ المنبثقة تُحقن هنا بواسطة modal.js
-  ══════════════════════════════════════════ -->
-  <div id="modal-container" class="fixed inset-0 z-50 hidden" role="dialog" aria-modal="true">
-  </div>
+  <div id="modal-container" class="fixed inset-0 z-50 hidden" role="dialog" aria-modal="true"></div>
 
-  <!-- ══════════════════════════════════════════
-       🚀 نقطة البدء — ES6 Module
-       type="module" يفعّل:
-       ✅ import/export
-       ✅ defer تلقائي (ينفذ بعد تحميل DOM)
-       ✅ strict mode تلقائي
-       ✅ عزل النطاق (Scope Isolation)
-  ══════════════════════════════════════════ -->
-  <script type="module" src="/src/main.js"></script>
+  <!-- نقطة البدء — مسار نسبي ✅ -->
+  <script type="module" src="./src/main.js"></script>
 
-  <!-- تعيين السنة في الـ Footer -->
   <script>
     document.getElementById('footer-year').textContent = new Date().getFullYear();
   </script>
