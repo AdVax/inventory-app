@@ -8,7 +8,7 @@
  * ──────────────────────────────────────────────────────────────
  */
 
-const CACHE_NAME    = 'inventory-erp-v2'
+const CACHE_NAME    = 'inventory-erp-v3'
 const STATIC_ASSETS = [
   '/inventory-app/',
   '/inventory-app//index.html',
