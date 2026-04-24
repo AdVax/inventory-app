@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- الخلفية -->
+  <rect width="512" height="512" rx="100" fill="#1e293b"/>
+
+  <!-- تدرج لوني للخلفية -->
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1e3a5f"/>
+      <stop offset="100%" style="stop-color:#0f172a"/>
+    </linearGradient>
+    <linearGradient id="icon" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#60a5fa"/>
+      <stop offset="100%" style="stop-color:#3b82f6"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="512" height="512" rx="100" fill="url(#bg)"/>
+
+  <!-- أيقونة صندوق المخزون -->
+  <!-- الغطاء العلوي -->
+  <path d="M256 100 L380 165 L380 200 L256 135 L132 200 L132 165 Z"
+        fill="url(#icon)" opacity="0.9"/>
+
+  <!-- الجانب الأيمن -->
+  <path d="M380 200 L380 340 L256 405 L256 265 Z"
+        fill="#2563eb" opacity="0.85"/>
+
+  <!-- الجانب الأيسر -->
+  <path d="M132 200 L132 340 L256 405 L256 265 Z"
+        fill="#60a5fa" opacity="0.7"/>
+
+  <!-- خط وسطي أفقي (الرف) -->
+  <line x1="132" y1="270" x2="380" y2="270" stroke="#93c5fd" stroke-width="6" opacity="0.5"/>
+
+  <!-- نجمة صغيرة للدلالة على الإدارة -->
+  <circle cx="256" cy="390" r="12" fill="#fbbf24" opacity="0.9"/>
+</svg>
