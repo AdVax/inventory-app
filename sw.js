@@ -2,7 +2,7 @@
  * sw.js — Service Worker (PWA)
  */
 
-const CACHE_NAME    = 'inventory-erp-v3'
+const CACHE_NAME    = 'inventory-erp-v4'
 const BASE          = '/inventory-app'
 const STATIC_ASSETS = [
   `${BASE}/`,
