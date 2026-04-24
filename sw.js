@@ -8,22 +8,22 @@
  * ──────────────────────────────────────────────────────────────
  */
 
-const CACHE_NAME    = 'inventory-erp-v1'
+const CACHE_NAME    = 'inventory-erp-v2'
 const STATIC_ASSETS = [
-  '/',
-  '/index.html',
-  '/assets/css/main.css',
-  '/src/main.js',
-  '/src/config/supabase.js',
-  '/src/store/store.js',
-  '/src/router/router.js',
-  '/src/utils/security.js',
-  '/src/utils/formatters.js',
-  '/src/utils/validators.js',
-  '/src/components/toast.js',
-  '/src/components/modal.js',
-  '/src/components/spinner.js',
-  '/src/components/confirmDialog.js',
+  '/inventory-app/',
+  '/inventory-app//index.html',
+  '/inventory-app//assets/css/main.css',
+  '/inventory-app//src/main.js',
+  '/inventory-app//src/config/supabase.js',
+  '/inventory-app//src/store/store.js',
+  '/inventory-app//src/router/router.js',
+  '/inventory-app//src/utils/security.js',
+  '/inventory-app//src/utils/formatters.js',
+  '/inventory-app//src/utils/validators.js',
+  '/inventory-app//src/components/toast.js',
+  '/inventory-app//src/components/modal.js',
+  '/inventory-app//src/components/spinner.js',
+  '/inventory-app//src/components/confirmDialog.js',
 ]
 
 // ── Install: تخزين الأصول الثابتة ──────────────────────────
