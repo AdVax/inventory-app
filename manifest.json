@@ -2,8 +2,8 @@
   "name": "نظام إدارة المخزون والمحاسبة",
   "short_name": "المخزون",
   "description": "نظام متكامل لإدارة المخزون والمحاسبة",
-  "start_url": "/inventory-app/",
-  "scope": "/inventory-app/",
+  "start_url": "/",
+  "scope": "/",
   "display": "standalone",
   "orientation": "portrait-primary",
   "theme_color": "#0f172a",
@@ -11,8 +11,18 @@
   "lang": "ar",
   "dir": "rtl",
   "icons": [
-    { "src": "/assets/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
-    { "src": "/assets/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+    {
+      "src": "/inventory-app/assets/icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/inventory-app/assets/icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    }
   ],
   "categories": ["business", "finance", "productivity"]
 }
